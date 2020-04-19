@@ -3,6 +3,7 @@ package cl.ofrecelo.api.offer.controller;
 import cl.ofrecelo.api.offer.exception.OfferNotFoundException;
 import cl.ofrecelo.api.offer.model.Offer;
 import cl.ofrecelo.api.offer.repository.OfferRepository;
+import cl.ofrecelo.api.offer.service.OfferService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,11 @@ import java.util.List;
 public class OfferController {
 
     private final OfferRepository offerRepository;
+    private final OfferService offerService;
 
-    public OfferController(OfferRepository offerRepository) {
+    public OfferController(OfferRepository offerRepository, OfferService offerService) {
         this.offerRepository = offerRepository;
+        this.offerService = offerService;
     }
 
     @GetMapping
@@ -30,7 +33,7 @@ public class OfferController {
 
     @PostMapping
     public ResponseEntity<Offer> saveOffer(@RequestBody Offer offer) {
-        return ResponseEntity.ok(offerRepository.save(offer));
+        return ResponseEntity.ok(offerService.saveOffer(offer));
     }
 
     @PutMapping
