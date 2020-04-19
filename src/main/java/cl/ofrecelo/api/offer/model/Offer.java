@@ -14,4 +14,6 @@ public class Offer {
     private String title;
 
     private Coordinates coordinates;
+
+    private String userId;
 }
