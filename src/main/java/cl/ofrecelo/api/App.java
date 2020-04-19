@@ -70,7 +70,7 @@ public class App {
     }
 
     private Optional<TenantOAuth2Request> getTenantAwareOAuth2Request(Authentication authentication) {
-        if (!authentication.getClass().isAssignableFrom(OAuth2Authentication.class)) {
+        if (authentication==null || !authentication.getClass().isAssignableFrom(OAuth2Authentication.class)) {
             return Optional.empty();
         }
         return Optional.of((TenantOAuth2Request) ((OAuth2Authentication) authentication).getOAuth2Request());
