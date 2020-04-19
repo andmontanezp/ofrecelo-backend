@@ -30,4 +30,5 @@ public class App {
             offerRepository.saveAll(Arrays.asList(offer, offer2));
         };
     }
+
 }
