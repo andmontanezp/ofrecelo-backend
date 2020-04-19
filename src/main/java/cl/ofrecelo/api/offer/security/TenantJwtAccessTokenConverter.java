@@ -21,7 +21,7 @@ public class TenantJwtAccessTokenConverter
         Map<String, Object> info = new LinkedHashMap<>(accessToken.getAdditionalInformation());
 
         info.put("userId", user.getUser().getId());
-        info.put("userName", user.getUser().getEmail());
+        info.put("email", user.getUser().getEmail());
         info.put("name", user.getUser().getName());
 
         DefaultOAuth2AccessToken customAccessToken = new DefaultOAuth2AccessToken(accessToken);
