@@ -24,8 +24,8 @@ public class App {
             offer.setCoordinates(new Coordinates("-33.403468", "-70.556611"));
 
             Offer offer2 = new Offer();
-            offer.setTitle("Offer 2");
-            offer.setCoordinates(new Coordinates("-33.403468", "-70.556611"));
+            offer2.setTitle("Offer 2");
+            offer2.setCoordinates(new Coordinates("-33.403468", "-70.556611"));
 
             offerRepository.saveAll(Arrays.asList(offer, offer2));
         };

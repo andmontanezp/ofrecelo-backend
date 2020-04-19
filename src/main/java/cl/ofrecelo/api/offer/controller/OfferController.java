@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController(value = "/offer")
+@RestController
+@RequestMapping("/offer")
 public class OfferController {
 
     private final OfferRepository offerRepository;
@@ -28,8 +29,8 @@ public class OfferController {
     }
 
     @PostMapping
-    public ResponseEntity<Offer> saveOffer() {
-        return ResponseEntity.ok(new Offer());
+    public ResponseEntity<Offer> saveOffer(@RequestBody Offer offer) {
+        return ResponseEntity.ok(offerRepository.save(offer));
     }
 
     @PutMapping
