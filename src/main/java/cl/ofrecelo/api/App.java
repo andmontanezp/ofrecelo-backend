@@ -2,13 +2,21 @@ package cl.ofrecelo.api;
 
 import cl.ofrecelo.api.offer.model.Coordinates;
 import cl.ofrecelo.api.offer.model.Offer;
+import cl.ofrecelo.api.offer.model.UserInformation;
 import cl.ofrecelo.api.offer.repository.OfferRepository;
+import cl.ofrecelo.api.offer.security.TenantOAuth2Request;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @SpringBootApplication
 public class App {
@@ -44,6 +52,28 @@ public class App {
 
             offerRepository.saveAll(Arrays.asList(offer, offer2, offer3, offer4, offer5));
         };
+    }
+
+    @Bean
+    @Scope(value = "prototype")
+    public UserInformation getAuthentication(){
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication= securityContext.getAuthentication();
+        Optional<TenantOAuth2Request> optionalRequestTokenInformation=getTenantAwareOAuth2Request(authentication);
+        if(optionalRequestTokenInformation.isPresent()){
+            TenantOAuth2Request requestTokenInformation = optionalRequestTokenInformation.get();
+            return new UserInformation(requestTokenInformation.getUserId(),
+                    requestTokenInformation.getTimeZone(),requestTokenInformation.getLanguage());
+        }
+
+        return new UserInformation(null,null,null);
+    }
+
+    private Optional<TenantOAuth2Request> getTenantAwareOAuth2Request(Authentication authentication) {
+        if (!authentication.getClass().isAssignableFrom(OAuth2Authentication.class)) {
+            return Optional.empty();
+        }
+        return Optional.of((TenantOAuth2Request) ((OAuth2Authentication) authentication).getOAuth2Request());
     }
 
 }
