@@ -21,9 +21,9 @@ public class TenantAccessTokenConverter
         if (map.containsKey("language"))
             tenantOAuth2Request.setLanguage((String) map.get("language"));
         if (map.containsKey("userId"))
-            tenantOAuth2Request.setUserId(Long.valueOf(map.get("userId").toString()));
-        if (map.containsKey("tenantTimeZone"))
-            tenantOAuth2Request.setTimeZone(String.valueOf(map.get("tenantTimeZone").toString()));
+            tenantOAuth2Request.setUserId(String.valueOf(map.get("userId").toString()));
+        if (map.containsKey("email"))
+            tenantOAuth2Request.setEmail(String.valueOf(map.get("email").toString()));
 
 
         return new OAuth2Authentication(tenantOAuth2Request, authentication.getUserAuthentication());

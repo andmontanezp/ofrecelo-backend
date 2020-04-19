@@ -1,20 +1,15 @@
 package cl.ofrecelo.api.offer.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserInformation {
     @Getter
-    private Long userId;
-    @Getter
-    private String timeZone;
-    @Getter
-    private String language;
+    private String userId;
 
-    public UserInformation(Long userId, String timeZone, String language) {
-        this.userId = userId;
-        this.timeZone = timeZone;
-        this.language = language;
-    }
+    @Getter
+    private String email;
 }

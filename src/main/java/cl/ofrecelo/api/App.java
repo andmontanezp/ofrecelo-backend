@@ -63,10 +63,10 @@ public class App {
         if(optionalRequestTokenInformation.isPresent()){
             TenantOAuth2Request requestTokenInformation = optionalRequestTokenInformation.get();
             return new UserInformation(requestTokenInformation.getUserId(),
-                    requestTokenInformation.getTimeZone(),requestTokenInformation.getLanguage());
+                    requestTokenInformation.getEmail());
         }
 
-        return new UserInformation(null,null,null);
+        return new UserInformation();
     }
 
     private Optional<TenantOAuth2Request> getTenantAwareOAuth2Request(Authentication authentication) {

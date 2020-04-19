@@ -11,16 +11,14 @@ public class TenantOAuth2Request
         extends OAuth2Request {
 
     private static final long serialVersionUID = -396143215213000470L;
-    private Long tenantId;
-    private Long userId;
-    private String timeZone;
+    private String userId;
+    private String email;
     private String language;
 
     TenantOAuth2Request(OAuth2Request other) {
         super(other);
-        tenantId = null;
         userId = null;
-        timeZone = null;
+        email = null;
     }
 
 }
