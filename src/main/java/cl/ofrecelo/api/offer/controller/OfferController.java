@@ -6,6 +6,7 @@ import cl.ofrecelo.api.offer.repository.OfferRepository;
 import cl.ofrecelo.api.offer.service.OfferService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,8 +33,11 @@ public class OfferController {
     }
 
     @PostMapping
-    public ResponseEntity<Offer> saveOffer(@RequestBody Offer offer) {
-        return ResponseEntity.ok(offerService.saveOffer(offer));
+    public ResponseEntity<Offer> saveOffer(@RequestParam("offerTitle") String offerTitle,
+                                           @RequestParam("offerLatitude") Double offerLatitude,
+                                           @RequestParam("offerLongitude") Double offerLongitude,
+                                           @RequestParam("offerFile") MultipartFile file) {
+        return ResponseEntity.ok(offerService.saveOffer(offerTitle, offerLatitude, offerLongitude, file));
     }
 
     @PutMapping
