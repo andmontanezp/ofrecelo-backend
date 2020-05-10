@@ -28,4 +28,14 @@ public class UserController {
         return ResponseEntity.ok(userRepository.findByEmail(email));
     }
 
+    @GetMapping("/resetPassword/{email}")
+    public ResponseEntity<Boolean> resetPassword(@PathVariable("email") String email) {
+        return ResponseEntity.ok(userService.resetPassword(email));
+    }
+
+    @GetMapping("/validateEmail/{cod}")
+    public ResponseEntity<String> validateTemporalPassword(@PathVariable("password") String cod) {
+        return ResponseEntity.ok(userService.validateEmail(cod));
+    }
+
 }
