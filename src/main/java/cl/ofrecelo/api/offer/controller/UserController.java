@@ -1,5 +1,6 @@
 package cl.ofrecelo.api.offer.controller;
 
+import cl.ofrecelo.api.offer.exception.UserNotFoundException;
 import cl.ofrecelo.api.offer.model.User;
 import cl.ofrecelo.api.offer.repository.UserRepository;
 import cl.ofrecelo.api.offer.service.UserService;
@@ -24,8 +25,8 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<User> findOne(@PathVariable("email") String email) {
-        return ResponseEntity.ok(userRepository.findByEmail(email));
+    public ResponseEntity<User> findOne(@PathVariable("email") String email) throws UserNotFoundException {
+        return ResponseEntity.ok(userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException()));
     }
 
     @GetMapping("/resetPassword/{email}")

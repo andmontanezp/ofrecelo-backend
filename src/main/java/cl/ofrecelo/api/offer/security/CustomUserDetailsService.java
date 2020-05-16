@@ -26,11 +26,11 @@ public class CustomUserDetailsService
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userName)
-    throws UsernameNotFoundException {
-
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(userName));
-        User  user = optionalUser.orElseThrow( ()->new UsernameNotFoundException(String.format("The username %s doesn't exist", userName)));
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(userName)
+                .orElseThrow(
+                        () -> new UsernameNotFoundException(String.format("The username %s doesn't exist", userName))
+                );
 
         return new CustomUserDetails(user, new HashSet<>(new ArrayList<>()));
 

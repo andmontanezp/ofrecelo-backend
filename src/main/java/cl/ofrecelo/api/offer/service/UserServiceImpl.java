@@ -1,7 +1,7 @@
 package cl.ofrecelo.api.offer.service;
 
-import cl.ofrecelo.api.offer.exceptions.ExistingUserException;
-import cl.ofrecelo.api.offer.exceptions.NoExistingUserException;
+import cl.ofrecelo.api.offer.exceptions.UserAlreadyCreatedException;
+import cl.ofrecelo.api.offer.exceptions.UserDoesNotExistsException;
 import cl.ofrecelo.api.offer.model.User;
 import cl.ofrecelo.api.offer.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,32 +32,30 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User create(User user) {
+    public User create(final User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(user.getEmail()));
 
-        if(existingUser.isPresent()) {
-            throw new ExistingUserException(existingUser.get().getEmail());
-        }else {
-            user = userRepository.save(user);
-        }
+        userRepository.findByEmail(user.getEmail()).ifPresentOrElse(
+                existingUser -> {
+                    throw new UserAlreadyCreatedException(existingUser.getEmail());
+                },
+                () -> userRepository.save(user)
+        );
 
-        return userRepository.save(user);
+        return user;
     }
 
     @Override
     public Boolean resetPassword(String email) {
+        User existingUser = userRepository.findByEmail(email).orElseThrow(() -> new UserDoesNotExistsException(email));
 
-        Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(email));
-        if(existingUser.isEmpty()){
-            throw new NoExistingUserException(email);
-        }else{
-            String newPassword = generatePassword(8).toString();
-            User user= userRepository.updatePassword(email, passwordEncoder.encode(newPassword));
-            sendSimpleMessage(email, "Recuperar contraseña",
-                    "Hola, "+user.getName()+ "tu nueva contraseña: "+ newPassword);
-            return true;
-        }
+        String newPassword = generatePassword(8).toString();
+
+        existingUser.setPassword(passwordEncoder.encode(newPassword));
+        existingUser = userRepository.save(existingUser);
+        sendSimpleMessage(email, "Recuperar contraseña",
+                "Hola, "+existingUser.getName()+ "tu nueva contraseña: "+ newPassword);
+        return true;
     }
 
     @Override

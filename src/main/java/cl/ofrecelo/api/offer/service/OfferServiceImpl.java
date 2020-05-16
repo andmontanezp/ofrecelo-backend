@@ -1,11 +1,14 @@
 package cl.ofrecelo.api.offer.service;
 
 import cl.ofrecelo.api.offer.dto.OfferDTO;
+import cl.ofrecelo.api.offer.exceptions.UserDoesNotExistsException;
 import cl.ofrecelo.api.offer.model.Coordinates;
 import cl.ofrecelo.api.offer.model.Offer;
 import cl.ofrecelo.api.offer.model.User;
 import cl.ofrecelo.api.offer.model.UserInformation;
 import cl.ofrecelo.api.offer.repository.OfferRepository;
+import cl.ofrecelo.api.offer.repository.UserRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,8 @@ import java.util.List;
 public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private UserInformation userInformation;
+    private UserRepository userRepository;
+
 
     @Autowired
     private CloudStorageService cloudStorageService;
@@ -27,9 +32,10 @@ public class OfferServiceImpl implements OfferService {
     @Value("${cloud.image.not.available}")
     private String defaultImage;
 
-    public OfferServiceImpl(OfferRepository offerRepository, UserInformation userInformation) {
+    public OfferServiceImpl(OfferRepository offerRepository, UserInformation userInformation, UserRepository userRepository) {
         this.offerRepository = offerRepository;
         this.userInformation = userInformation;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -39,7 +45,8 @@ public class OfferServiceImpl implements OfferService {
         if(file != null){
             offer.setTitle(offerTitle);
             offer.setCoordinates(new Coordinates(offerLatitude, offerLongitude));
-            offer.setUserId(userInformation.getUserId());
+            User user = userRepository.findById(new ObjectId(userInformation.getUserId())).orElseThrow(() -> new UserDoesNotExistsException(""));
+            offer.setUser(user);
             String blobName = null;
             try {
                 blobName = cloudStorageService.uploadFile(file, file.getOriginalFilename(), offerTitle, userInformation.getUserId());
@@ -72,7 +79,7 @@ public class OfferServiceImpl implements OfferService {
         List<OfferDTO> offerResponse = new ArrayList<>();
         offers.forEach(offer -> {
             OfferDTO dto = new OfferDTO();
-            dto.setId(offer.getId());
+            dto.setId(offer.getId().toString());
             dto.setTitle(offer.getTitle());
             dto.setCoordinates(offer.getCoordinates());
             dto.setBlobName(offer.getBlobName());

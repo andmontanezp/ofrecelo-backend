@@ -1,6 +1,6 @@
 package cl.ofrecelo.api.offer.repository;
 
-import cl.ofrecelo.api.offer.exceptions.ExistingUserException;
+import cl.ofrecelo.api.offer.exceptions.UserAlreadyCreatedException;
 import cl.ofrecelo.api.offer.model.User;
 
 import org.bson.types.ObjectId;
@@ -49,7 +49,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             }
             mongoTemplate.save(userDB);
         }else{
-            throw new ExistingUserException(email);
+            throw new UserAlreadyCreatedException(email);
         }
         return userDB;
     }
