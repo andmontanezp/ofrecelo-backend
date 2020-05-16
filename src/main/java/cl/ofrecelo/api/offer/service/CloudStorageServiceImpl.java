@@ -51,4 +51,23 @@ public class CloudStorageServiceImpl implements CloudStorageService {
         }
         return mediaLink;
     }
+
+    @Override
+    public byte[] dowloadFile(String blobName) throws Exception {
+        byte[] file = null;
+        try {
+            Storage storage = StorageOptions.getDefaultInstance().getService();
+            if(storage != null){
+                if(cloudStorage != null && !"".equalsIgnoreCase(cloudStorage)){
+                    BlobId blobId = BlobId.of(cloudStorage, blobName);
+                    if(blobId != null){
+                        file = storage.readAllBytes(blobId);
+                    }
+                }
+            }
+        }catch (Exception e){
+            throw new Exception("Error downloading the file:" + e);
+        }
+        return file;
+    }
 }

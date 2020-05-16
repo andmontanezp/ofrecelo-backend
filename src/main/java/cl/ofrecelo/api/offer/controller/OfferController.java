@@ -1,5 +1,6 @@
 package cl.ofrecelo.api.offer.controller;
 
+import cl.ofrecelo.api.offer.dto.OfferDTO;
 import cl.ofrecelo.api.offer.exception.OfferNotFoundException;
 import cl.ofrecelo.api.offer.model.Offer;
 import cl.ofrecelo.api.offer.repository.OfferRepository;
@@ -23,8 +24,8 @@ public class OfferController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Offer>> findOffers() {
-        return ResponseEntity.ok(offerRepository.findAll());
+    public ResponseEntity<List<OfferDTO>> findOffers() {
+        return ResponseEntity.ok(offerService.getOffers());
     }
 
     @GetMapping("/{id}")
@@ -47,5 +48,10 @@ public class OfferController {
 
     @DeleteMapping
     public void deleteOffer() {
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<OfferDTO>> findOne() {
+        return ResponseEntity.ok(offerService.getOffersByUser());
     }
 }
