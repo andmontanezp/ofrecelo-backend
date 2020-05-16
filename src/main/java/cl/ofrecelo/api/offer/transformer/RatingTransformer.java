@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,7 @@ public class RatingTransformer implements Transformable<RatingDto, Rating> {
 
     @Override
     public List<RatingDto> fromDomainListToResponseList(List<Rating> ratings) {
-        return ratings.stream()
+        return Optional.ofNullable(ratings).orElseGet(ArrayList::new).stream()
                 .map(this::fromDomainObjectToResponse)
                 .collect(Collectors.toList());
     }

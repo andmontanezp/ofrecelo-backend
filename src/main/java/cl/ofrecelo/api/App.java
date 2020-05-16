@@ -64,17 +64,17 @@ public class App {
 
         offerRepository.saveAll(Arrays.asList(offer, offer2, offer3, offer4, offer5));
 
-        List<Rating> ratings = new ArrayList<>();
-
-        Rating rating = new Rating();
-        rating.setUser(yorland);
-        rating.setOffer(offer);
-        rating.setScore(5);
-        rating.setFeedback("Asombroso!!");
-
-        ratings.add(ratingRepository.save(rating));
-
-        offer.setRatings(ratings);
+//        List<Rating> ratings = new ArrayList<>();
+//
+//        Rating rating = new Rating();
+//        rating.setUser(yorland);
+//        rating.setOffer(offer);
+//        rating.setScore(5);
+//        rating.setFeedback("Asombroso!!");
+//
+//        ratings.add(ratingRepository.save(rating));
+//
+//        offer.setRatings(ratings);
 
         offerRepository.save(offer);
     }

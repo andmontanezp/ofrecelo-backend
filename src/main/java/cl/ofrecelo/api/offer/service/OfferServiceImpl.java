@@ -1,6 +1,7 @@
 package cl.ofrecelo.api.offer.service;
 
 import cl.ofrecelo.api.offer.dto.OfferDTO;
+import cl.ofrecelo.api.offer.dto.RatingDto;
 import cl.ofrecelo.api.offer.exceptions.UserDoesNotExistsException;
 import cl.ofrecelo.api.offer.model.Coordinates;
 import cl.ofrecelo.api.offer.model.Offer;
@@ -8,6 +9,7 @@ import cl.ofrecelo.api.offer.model.User;
 import cl.ofrecelo.api.offer.model.UserInformation;
 import cl.ofrecelo.api.offer.repository.OfferRepository;
 import cl.ofrecelo.api.offer.repository.UserRepository;
+import cl.ofrecelo.api.offer.transformer.RatingTransformer;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +26,7 @@ public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private UserInformation userInformation;
     private UserRepository userRepository;
+    private RatingTransformer ratingTransformer;
 
 
     @Autowired
@@ -32,10 +35,11 @@ public class OfferServiceImpl implements OfferService {
     @Value("${cloud.image.not.available}")
     private String defaultImage;
 
-    public OfferServiceImpl(OfferRepository offerRepository, UserInformation userInformation, UserRepository userRepository) {
+    public OfferServiceImpl(OfferRepository offerRepository, UserInformation userInformation, UserRepository userRepository, RatingTransformer ratingTransformer) {
         this.offerRepository = offerRepository;
         this.userInformation = userInformation;
         this.userRepository = userRepository;
+        this.ratingTransformer = ratingTransformer;
     }
 
     @Override
@@ -83,6 +87,7 @@ public class OfferServiceImpl implements OfferService {
             dto.setTitle(offer.getTitle());
             dto.setCoordinates(offer.getCoordinates());
             dto.setBlobName(offer.getBlobName());
+            dto.setRating(ratingTransformer.fromDomainListToResponseList(offer.getRatings()));
             byte[] file = new byte[0];
             try {
                 if(offer.getBlobName() != null && !"".equalsIgnoreCase(offer.getBlobName())){
