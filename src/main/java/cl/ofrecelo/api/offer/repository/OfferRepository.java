@@ -6,8 +6,6 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface OfferRepository extends MongoRepository<Offer, String> {
+public interface OfferRepository extends MongoRepository<Offer, String>, OfferRepositoryCustom {
 
-    @Query("{ 'userId' : ?0 }")
-    List<Offer> findByUserId(String userId);
 }

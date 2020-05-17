@@ -2,6 +2,7 @@ package cl.ofrecelo.api.offer.service;
 
 import com.google.api.services.storage.model.Bucket;
 import com.google.cloud.storage.*;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class CloudStorageServiceImpl implements CloudStorageService {
      * subir archivos cloud
      */
     @Override
-    public String uploadFile(MultipartFile file, String fileName, String offerTitle, String userId) throws Exception {
+    public String uploadFile(MultipartFile file, String fileName, String offerTitle, ObjectId userId) throws Exception {
         String mediaLink = "";
         try {
             Date today = new Date();

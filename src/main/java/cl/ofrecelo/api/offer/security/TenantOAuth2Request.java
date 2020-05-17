@@ -3,6 +3,7 @@ package cl.ofrecelo.api.offer.security;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.bson.types.ObjectId;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 
 @EqualsAndHashCode(callSuper = true)
@@ -11,7 +12,7 @@ public class TenantOAuth2Request
         extends OAuth2Request {
 
     private static final long serialVersionUID = -396143215213000470L;
-    private String userId;
+    private ObjectId userId;
     private String email;
     private String language;
 

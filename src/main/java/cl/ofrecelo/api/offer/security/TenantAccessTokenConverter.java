@@ -1,8 +1,10 @@
 package cl.ofrecelo.api.offer.security;
 
 
+import org.bson.types.ObjectId;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
+import com.google.gson.Gson;
 
 import java.util.Map;
 
@@ -21,7 +23,7 @@ public class TenantAccessTokenConverter
         if (map.containsKey("language"))
             tenantOAuth2Request.setLanguage((String) map.get("language"));
         if (map.containsKey("userId"))
-            tenantOAuth2Request.setUserId(String.valueOf(map.get("userId").toString()));
+            tenantOAuth2Request.setUserId( new Gson().fromJson(new Gson().toJson(map.get("userId")), ObjectId.class));
         if (map.containsKey("email"))
             tenantOAuth2Request.setEmail(String.valueOf(map.get("email").toString()));
 

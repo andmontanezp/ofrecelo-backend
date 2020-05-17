@@ -45,7 +45,7 @@ public class OfferServiceImpl implements OfferService {
         if(file != null){
             offer.setTitle(offerTitle);
             offer.setCoordinates(new Coordinates(offerLatitude, offerLongitude));
-            User user = userRepository.findById(new ObjectId(userInformation.getUserId())).orElseThrow(() -> new UserDoesNotExistsException(""));
+            User user = userRepository.findById(userInformation.getUserId()).orElseThrow(() -> new UserDoesNotExistsException(""));
             offer.setUser(user);
             String blobName = null;
             try {
@@ -70,8 +70,9 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public List<OfferDTO> getOffersByUser() {
-        List<Offer> offers = offerRepository.findByUserId(userInformation.getUserId());
+        List<Offer> offers = offerRepository.findByUser(userInformation.getUserId());
         List<OfferDTO> offerResponse = formattOfferResponse(offers);
+
         return offerResponse;
     }
 
