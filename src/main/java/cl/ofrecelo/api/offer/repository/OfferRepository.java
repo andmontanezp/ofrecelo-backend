@@ -10,4 +10,6 @@ public interface OfferRepository extends MongoRepository<Offer, String> {
 
     @Query("{ 'userId' : ?0 }")
     List<Offer> findByUserId(String userId);
+
+    List<Offer> findAllByAddress_District(String district);
 }

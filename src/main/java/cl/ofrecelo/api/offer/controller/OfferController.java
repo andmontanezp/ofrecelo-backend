@@ -4,6 +4,7 @@ import cl.ofrecelo.api.offer.dto.OfferDTO;
 import cl.ofrecelo.api.offer.exception.OfferNotFoundException;
 import cl.ofrecelo.api.offer.model.Offer;
 import cl.ofrecelo.api.offer.repository.OfferRepository;
+import cl.ofrecelo.api.offer.request.OfferRequest;
 import cl.ofrecelo.api.offer.service.OfferService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,8 @@ public class OfferController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OfferDTO>> findOffers() {
-        return ResponseEntity.ok(offerService.getOffers());
+    public ResponseEntity<List<OfferDTO>> findOffers(@RequestParam("district") String district) {
+        return ResponseEntity.ok(offerService.getOffers(district));
     }
 
     @GetMapping("/{id}")
@@ -34,11 +35,8 @@ public class OfferController {
     }
 
     @PostMapping
-    public ResponseEntity<Offer> saveOffer(@RequestParam("offerTitle") String offerTitle,
-                                           @RequestParam("offerLatitude") Double offerLatitude,
-                                           @RequestParam("offerLongitude") Double offerLongitude,
-                                           @RequestParam("offerFile") MultipartFile file) {
-        return ResponseEntity.ok(offerService.saveOffer(offerTitle, offerLatitude, offerLongitude, file));
+    public ResponseEntity<OfferDTO> saveOffer(@RequestBody OfferRequest offerRequest, @RequestParam(value = "offerFile", required = false) MultipartFile file) {
+        return ResponseEntity.ok(offerService.saveOffer(offerRequest, file));
     }
 
     @PutMapping

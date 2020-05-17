@@ -1,13 +1,8 @@
 package cl.ofrecelo.api.offer.controller;
 
 import cl.ofrecelo.api.offer.dto.RatingDto;
-import cl.ofrecelo.api.offer.exception.OfferNotFoundException;
-import cl.ofrecelo.api.offer.exception.UserNotFoundException;
-import cl.ofrecelo.api.offer.model.Rating;
-import cl.ofrecelo.api.offer.repository.RatingRepository;
+
 import cl.ofrecelo.api.offer.service.CustomRatingService;
-import cl.ofrecelo.api.offer.transformer.RatingTransformer;
-import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
