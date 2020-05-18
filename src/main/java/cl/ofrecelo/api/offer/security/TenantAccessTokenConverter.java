@@ -1,10 +1,10 @@
 package cl.ofrecelo.api.offer.security;
 
 
+import com.google.gson.Gson;
 import org.bson.types.ObjectId;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
-import com.google.gson.Gson;
 
 import java.util.Map;
 

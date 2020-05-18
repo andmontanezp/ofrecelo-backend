@@ -23,9 +23,13 @@ public class Offer {
 
     private String blobName;
 
+    private Address address;
+
     @DBRef(lazy = true)
     @JsonIgnoreProperties({"offer", "ratings"})
     private User user;
+
+    private String userId;
 
     @DBRef(lazy = true)
     private List<Rating> ratings;

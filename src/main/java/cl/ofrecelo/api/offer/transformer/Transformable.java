@@ -1,9 +1,5 @@
 package cl.ofrecelo.api.offer.transformer;
 
-import cl.ofrecelo.api.offer.exception.OfferNotFoundException;
-import cl.ofrecelo.api.offer.exception.UserNotFoundException;
-
-import java.util.Collection;
 import java.util.List;
 
 public interface Transformable<T, R> {

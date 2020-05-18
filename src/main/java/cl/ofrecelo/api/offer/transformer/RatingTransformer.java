@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class RatingTransformer implements Transformable<RatingDto, Rating> {
     @Override
     public Rating fromRequestToDomainObject(RatingDto ratingDto) throws OfferNotFoundException, UserNotFoundException {
         Rating rating = new Rating();
-        rating.setOffer(offerRepository.findById(ratingDto.getOfferId()).orElseThrow(OfferNotFoundException::new));
+        rating.setOffer(offerRepository.findById(new ObjectId(ratingDto.getOfferId())).orElseThrow(OfferNotFoundException::new));
         rating.setUser(userRepository.findById(new ObjectId(ratingDto.getUserId())).orElseThrow(UserNotFoundException::new));
         rating.setFeedback(ratingDto.getFeedback());
         rating.setScore(ratingDto.getScore());
@@ -48,7 +49,7 @@ public class RatingTransformer implements Transformable<RatingDto, Rating> {
 
     @Override
     public List<RatingDto> fromDomainListToResponseList(List<Rating> ratings) {
-        return ratings.stream()
+        return Optional.ofNullable(ratings).orElseGet(ArrayList::new).stream()
                 .map(this::fromDomainObjectToResponse)
                 .collect(Collectors.toList());
     }
