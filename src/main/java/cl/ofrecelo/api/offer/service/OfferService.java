@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface OfferService {
      List<OfferDTO> getOffers(String district);
-     OfferDTO saveOffer(OfferRequest offerRequest, MultipartFile file);
+     OfferDTO saveOffer(OfferRequest offerRequest);
      List<OfferDTO> getOffersByUser();
 }

@@ -18,6 +18,7 @@ import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -53,25 +54,27 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public OfferDTO saveOffer(OfferRequest offerRequest, MultipartFile file) {
+    public OfferDTO saveOffer(OfferRequest offerRequest) {
         Offer offer = new Offer();
         offer.setTitle(offerRequest.getOfferTitle());
         offer.setCoordinates(Coordinates.fromLatLong(offerRequest.getOfferLatitude(), offerRequest.getOfferLongitude()));
-        User user = userRepository.findById(new ObjectId(offerRequest.getUserId())).orElseThrow(() -> new UserDoesNotExistsException(""));
-        offer.setUserId(user.get_id().toString());
-        offer.setUser(user);
-        offer.setAddress(Address.fromDistrict(offerRequest.getDistrict()));
+        //User user = userRepository.findById(new ObjectId(String.valueOf(userInformation.getUserId()))).orElseThrow(() -> new UserDoesNotExistsException(""));
+        offer.setUserId(String.valueOf(userInformation.getUserId()));
+        //offer.setUser(user);
+        offer.setAddress(Address.fromDistrict(offerRequest.getDistrict().toLowerCase()));
         //upload file
-        uploadFile(offerRequest, file, offer);
+        uploadFile(offerRequest, offerRequest.getFile(), offerRequest.getFileName(), offerRequest.getFileExtension(), offer);
         return offerTransformer.fromDomainObjectToResponse(offerRepository.save(offer));
     }
 
-    private void uploadFile(OfferRequest offerRequest, MultipartFile file, Offer offer) {
+    private void uploadFile(OfferRequest offerRequest, String file, String fileName , String fileExtension, Offer offer) {
         if(file != null){
             String blobName = null;
             try {
                 ObjectId userId= userInformation.getUserId();
-                blobName = cloudStorageService.uploadFile(file, file.getOriginalFilename(), offerRequest.getOfferTitle(),
+                //Decodificando file
+                byte[] fileDecoded = Base64.getDecoder().decode(file);
+                blobName = cloudStorageService.uploadFile(fileDecoded, fileName, offerRequest.getOfferTitle(),
                         userId);
             } catch (Exception e) {
                 e.printStackTrace();

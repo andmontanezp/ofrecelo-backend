@@ -24,7 +24,7 @@ public class CloudStorageServiceImpl implements CloudStorageService {
      * subir archivos cloud
      */
     @Override
-    public String uploadFile(MultipartFile file, String fileName, String offerTitle, ObjectId userId) throws Exception {
+    public String uploadFile(byte[] file, String fileName, String offerTitle, ObjectId userId) throws Exception {
         String mediaLink = "";
         try {
             Date today = new Date();
@@ -39,7 +39,7 @@ public class CloudStorageServiceImpl implements CloudStorageService {
                                     + "_" + today.getTime() + "_" + fileName;
                             BlobId blobId = BlobId.of(cloudStorage, blobName);
                             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();
-                            Blob blob = storage.create(blobInfo, new ByteArrayInputStream(file.getBytes()));
+                            Blob blob = storage.create(blobInfo, new ByteArrayInputStream(file));
                             if(blob != null){
                                mediaLink = blob.getName();
                             }

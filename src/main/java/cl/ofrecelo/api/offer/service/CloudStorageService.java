@@ -7,6 +7,6 @@ import java.io.File;
 
 public interface CloudStorageService {
 
-    String uploadFile(MultipartFile file, String fileName, String offerTitle, ObjectId userId) throws Exception;
+    String uploadFile(byte[] file, String fileName, String offerTitle, ObjectId userId) throws Exception;
     byte[] dowloadFile(String blobName) throws Exception;
 }

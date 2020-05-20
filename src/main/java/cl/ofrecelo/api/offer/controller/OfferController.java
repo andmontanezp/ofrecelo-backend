@@ -37,7 +37,7 @@ public class OfferController {
 
     @PostMapping
     public ResponseEntity<OfferDTO> saveOffer(@RequestBody OfferRequest offerRequest, @RequestParam(value = "offerFile", required = false) MultipartFile file) {
-        return ResponseEntity.ok(offerService.saveOffer(offerRequest, file));
+        return ResponseEntity.ok(offerService.saveOffer(offerRequest));
     }
 
     @PutMapping

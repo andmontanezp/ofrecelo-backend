@@ -9,4 +9,7 @@ public class OfferRequest {
     private double offerLatitude;
     private double offerLongitude;
     private String district;
+    private String file;
+    private String fileExtension;
+    private String fileName;
 }
