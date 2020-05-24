@@ -45,8 +45,9 @@ public class OfferController {
         return ResponseEntity.ok(new Offer());
     }
 
-    @DeleteMapping
-    public void deleteOffer() {
+    @DeleteMapping("/{id}")
+    public void deleteOffer(@PathVariable("id") String offerId) throws OfferNotFoundException  {
+         offerRepository.deleteById(new ObjectId(offerId));
     }
 
     @GetMapping("/user")
