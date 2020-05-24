@@ -25,8 +25,8 @@ public class OfferController {
         this.offerService = offerService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<OfferDTO>> findOffers(@RequestParam("district") String district) {
+    @GetMapping("/location/{district}")
+    public ResponseEntity<List<OfferDTO>> findOffers(@PathVariable("district") String district) {
         return ResponseEntity.ok(offerService.getOffers(district));
     }
 
