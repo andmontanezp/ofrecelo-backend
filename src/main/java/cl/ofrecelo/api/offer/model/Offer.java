@@ -27,6 +27,8 @@ public class Offer {
 
     private String description;
 
+    private String offerType;
+
     @DBRef(lazy = true)
     @JsonIgnoreProperties({"offer", "ratings"})
     private User user;
