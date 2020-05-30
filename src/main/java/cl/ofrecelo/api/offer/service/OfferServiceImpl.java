@@ -62,6 +62,7 @@ public class OfferServiceImpl implements OfferService {
         offer.setUserId(String.valueOf(userInformation.getUserId()));
         //offer.setUser(user);
         offer.setAddress(Address.fromDistrict(offerRequest.getDistrict().toLowerCase()));
+        offer.setDescription(offerRequest.getDescription());
         //upload file
         uploadFile(offerRequest, offerRequest.getFile(), offerRequest.getFileName(), offerRequest.getFileExtension(), offer);
         return offerTransformer.fromDomainObjectToResponse(offerRepository.save(offer));

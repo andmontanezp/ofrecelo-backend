@@ -22,4 +22,6 @@ public class OfferDTO implements Serializable {
     private List<RatingDto> rating;
 
     private byte[] file;
+
+    private String description;
 }

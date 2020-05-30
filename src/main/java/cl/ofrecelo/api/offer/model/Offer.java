@@ -25,6 +25,8 @@ public class Offer {
 
     private Address address;
 
+    private String description;
+
     @DBRef(lazy = true)
     @JsonIgnoreProperties({"offer", "ratings"})
     private User user;

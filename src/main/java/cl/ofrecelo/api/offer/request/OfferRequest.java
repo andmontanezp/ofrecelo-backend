@@ -12,4 +12,5 @@ public class OfferRequest {
     private String file;
     private String fileExtension;
     private String fileName;
+    private String description;
 }
