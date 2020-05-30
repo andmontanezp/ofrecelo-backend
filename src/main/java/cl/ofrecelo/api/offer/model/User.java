@@ -27,6 +27,8 @@ public class User {
 
     private String password;
 
+    private String phone;
+
     @DBRef(lazy = true)
     Offer offer;
 

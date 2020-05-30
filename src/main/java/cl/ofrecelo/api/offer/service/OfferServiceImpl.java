@@ -89,8 +89,12 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public List<OfferDTO> getOffers(String district) {
+        String uppercaseDistrict = district.toUpperCase().replace(" ", "_");
         List<Offer> offers = offerRepository.findAllByAddress_District(district);
         List<OfferDTO> offerResponse = formattOfferResponse(offers);
+
+        Coordinates coordinates = DefaultCoodinates.valueOf(uppercaseDistrict).getCoordinates();
+
         return offerResponse;
     }
 
