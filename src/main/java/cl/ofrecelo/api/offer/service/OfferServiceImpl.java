@@ -59,7 +59,7 @@ public class OfferServiceImpl implements OfferService {
         offer.setTitle(offerRequest.getOfferTitle());
         offer.setCoordinates(Coordinates.fromLatLong(offerRequest.getOfferLatitude(), offerRequest.getOfferLongitude()));
         //User user = userRepository.findById(new ObjectId(String.valueOf(userInformation.getUserId()))).orElseThrow(() -> new UserDoesNotExistsException(""));
-        offer.setUserId(String.valueOf(userInformation.getUserId()));
+        offer.setUserId(String.valueOf(userInformation.getEmail()));
         //offer.setUser(user);
         offer.setAddress(Address.fromDistrict(offerRequest.getDistrict().toLowerCase()));
         offer.setDescription(offerRequest.getDescription());
@@ -100,8 +100,8 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public List<OfferDTO> getOffersByUser() {
-        ObjectId userId= userInformation.getUserId();
-        List<Offer> offers = offerRepository.findAllByUserId(userId.toString());
+        String userId= userInformation.getEmail();
+        List<Offer> offers = offerRepository.findAllByUserId(userId);
         List<OfferDTO> offerResponse = formattOfferResponse(offers);
         return offerResponse;
     }
