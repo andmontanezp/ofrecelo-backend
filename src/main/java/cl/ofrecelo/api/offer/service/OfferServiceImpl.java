@@ -115,6 +115,7 @@ public class OfferServiceImpl implements OfferService {
                 dto.setTitle(offer.getTitle());
                 dto.setCoordinates(offer.getCoordinates());
                 dto.setBlobName(offer.getBlobName());
+                dto.setDescription(offer.getDescription());
                 dto.setRating(ratingTransformer.fromDomainListToResponseList(offer.getRatings()));
                 byte[] file = new byte[0];
                 try {
