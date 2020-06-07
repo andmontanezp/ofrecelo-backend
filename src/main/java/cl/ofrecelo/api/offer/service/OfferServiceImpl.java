@@ -113,6 +113,7 @@ public class OfferServiceImpl implements OfferService {
                 OfferDTO dto = new OfferDTO();
                 dto.setId(offer.getId().toString());
                 dto.setTitle(offer.getTitle());
+                dto.setDescription(offer.getDescription());
                 dto.setCoordinates(offer.getCoordinates());
                 dto.setBlobName(offer.getBlobName());
                 dto.setRating(ratingTransformer.fromDomainListToResponseList(offer.getRatings()));
