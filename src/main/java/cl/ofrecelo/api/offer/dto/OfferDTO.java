@@ -25,5 +25,6 @@ public class OfferDTO implements Serializable {
 
     private String description;
 
-    private DefaultLocationMap defaultLocationMap;
+    private String location;
+
 }

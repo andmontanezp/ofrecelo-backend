@@ -25,6 +25,8 @@ public class Offer {
 
     private Address address;
 
+    private String location;
+
     private String description;
 
     private String offerType;

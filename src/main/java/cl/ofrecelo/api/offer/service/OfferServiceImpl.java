@@ -62,6 +62,7 @@ public class OfferServiceImpl implements OfferService {
         offer.setUserId(String.valueOf(userInformation.getEmail()));
         //offer.setUser(user);
         offer.setAddress(Address.fromDistrict(offerRequest.getDistrict().toLowerCase()));
+        offer.setLocation(offerRequest.getLocation());
         offer.setDescription(offerRequest.getDescription());
         offer.setOfferType(offerRequest.getOfferType());
         //upload file
@@ -116,6 +117,7 @@ public class OfferServiceImpl implements OfferService {
                 dto.setDescription(offer.getDescription());
                 dto.setCoordinates(offer.getCoordinates());
                 dto.setBlobName(offer.getBlobName());
+                dto.setLocation(offer.getLocation());
                 dto.setDescription(offer.getDescription());
                 dto.setRating(ratingTransformer.fromDomainListToResponseList(offer.getRatings()));
                 byte[] file = new byte[0];

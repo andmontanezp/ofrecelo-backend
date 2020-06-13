@@ -8,6 +8,7 @@ public class OfferRequest {
     private String offerTitle;
     private double offerLatitude;
     private double offerLongitude;
+    private String location;
     private String district;
     private String file;
     private String fileExtension;
